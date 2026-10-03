@@ -1,0 +1,80 @@
+{
+  "name": "macaron",
+  "private": true,
+  "version": "1.1.0",
+  "type": "module",
+  "main": "desktop/main.cjs",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "desktop:dev": "electron desktop/main.cjs",
+    "desktop:test": "node --test \"desktop/test/*.test.cjs\"",
+    "desktop:build": "npm run build && powershell -NoProfile -ExecutionPolicy Bypass -File scripts/get-php-runtime.ps1 && powershell -NoProfile -ExecutionPolicy Bypass -File scripts/prepare-desktop-app.ps1 && electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.11",
+    "autoprefixer": "^10.6.1",
+    "axios": "^1.20.0",
+    "electron": "^44.5.1",
+    "electron-builder": "^26.15.3",
+    "laravel-vite-plugin": "^1.0.0",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^3.4.17",
+    "vite": "^5.0.0"
+  },
+  "dependencies": {
+    "@fontsource/hanken-grotesk": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "alpinejs": "^3.17.3",
+    "chart.js": "^4.5.1",
+    "material-symbols": "^0.47.3"
+  },
+  "build": {
+    "appId": "pk.macaron.desktop",
+    "productName": "Macaron",
+    "directories": {
+      "output": "dist-desktop"
+    },
+    "asar": true,
+    "asarUnpack": [
+      "desktop/**"
+    ],
+    "extraResources": [
+      {
+        "from": "desktop/staging/app",
+        "to": "app"
+      },
+      {
+        "from": "desktop/runtime/php",
+        "to": "php"
+      },
+      {
+        "from": "desktop/firewall-enable.bat",
+        "to": "firewall-enable.bat"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "desktop/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "Macaron"
+    },
+    "files": [
+      "desktop/main.cjs",
+      "desktop/preload.cjs",
+      "desktop/php-server.cjs",
+      "desktop/first-run.cjs",
+      "desktop/auto-backup.cjs",
+      "desktop/server.php",
+      "desktop/icon.png",
+      "package.json"
+    ]
+  }
+}

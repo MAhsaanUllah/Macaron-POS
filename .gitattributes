@@ -1,0 +1,22 @@
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.sqlite binary
+*.exe binary
+
+# Windows-only scripts must keep CRLF to run reliably.
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+/.github export-ignore
+/tests export-ignore
+/desktop/test export-ignore
+.phpunit.cache export-ignore
+.phpunit.result.cache export-ignore

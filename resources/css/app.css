@@ -1,0 +1,115 @@
+/* index.css only ships weight 400, which made every font-bold/font-black render as
+   browser-synthesized faux bold; load exactly the weights the UI uses instead */
+@import '@fontsource/hanken-grotesk/400.css';
+@import '@fontsource/hanken-grotesk/500.css';
+@import '@fontsource/hanken-grotesk/600.css';
+@import '@fontsource/hanken-grotesk/700.css';
+@import '@fontsource/hanken-grotesk/900.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+@import '@fontsource/jetbrains-mono/700.css';
+@import '@fontsource/jetbrains-mono/800.css';
+@import 'material-symbols/rounded.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    color-scheme: light;
+    --md-primary: 113 83 0;
+    --md-on-primary: 255 255 255;
+    --md-background: 255 251 254;
+    --md-surface: 255 251 254;
+    --md-surface-container: 243 237 247;
+    --md-outline: 121 116 126;
+    --md-on-surface: 29 27 32;
+    --md-on-surface-variant: 73 69 79;
+    --md-error: 179 38 30;
+}
+
+.dark {
+    color-scheme: dark;
+    --md-primary: 226 196 104;
+    --md-on-primary: 59 45 0;
+    --md-background: 20 19 22;
+    --md-surface: 28 27 31;
+    --md-surface-container: 43 41 48;
+    --md-outline: 147 143 153;
+    --md-on-surface: 230 225 229;
+    --md-on-surface-variant: 202 196 208;
+    --md-error: 255 180 171;
+}
+
+[x-cloak] { display: none !important; }
+.text-white { color: rgb(var(--md-on-surface)) !important; }
+
+.material-symbols-rounded {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgb(var(--md-outline) / 0.35); border-radius: 10px; }
+
+.zebra-item:nth-child(even) { background-color: rgba(255, 255, 255, 0.02); }
+.zebra-item:nth-child(odd) { background-color: transparent; }
+
+.order-item-list::-webkit-scrollbar { width: 4px; }
+.order-item-list::-webkit-scrollbar-track { background: transparent; }
+.order-item-list::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.05); border-radius: 10px; }
+.order-item-list::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.1); }
+
+body {
+    font-family: 'Hanken Grotesk', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+}
+
+@media (max-height: 850px) {
+    header { height: 60px !important; }
+    aside { width: 220px !important; }
+    .order-header-compact { padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; }
+    .order-totals-compact { padding: 1.5rem !important; }
+    .order-item-list { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+    .checkout-btn { height: 60px !important; }
+    .tag-pill { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+    .product-card-img { aspect-ratio: 16/10 !important; }
+}
+
+@media (max-height: 800px) {
+    .order-header-compact { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+    .order-totals-compact { padding: 0.75rem !important; }
+    .zebra-item { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.active-nav {
+    background: rgb(var(--md-primary)) !important;
+    color: rgb(var(--md-on-primary)) !important;
+    box-shadow: none;
+}
+
+html.nav-collapsed .app-sidebar { display: none; }
+
+/* Smooth cross-fade between full page loads; unsupported browsers navigate normally */
+@view-transition {
+    navigation: auto;
+}
+
+/* Sidebar and top bar are identical across pages: pin them so only the content area fades */
+.app-sidebar { view-transition-name: app-sidebar; }
+.app-topbar { view-transition-name: app-topbar; }
+::view-transition-group(app-sidebar),
+::view-transition-group(app-topbar) {
+    animation-duration: 0.01ms;
+}

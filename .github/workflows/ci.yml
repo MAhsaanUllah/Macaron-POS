@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Backend + shell tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: sqlite3, pdo_sqlite, gd, intl, iconv, mbstring, dom, fileinfo
+          coverage: none
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: |
+          composer install --no-interaction --prefer-dist --no-progress
+          npm ci
+
+      - name: Build the Vite bundle (Blade views need the manifest)
+        run: npm run build
+
+      - name: Compile Blade
+        run: |
+          cp .env.example .env
+          php artisan key:generate --force
+          php artisan view:cache
+
+      - name: Code style
+        run: vendor/bin/pint --test
+
+      - name: Laravel feature tests
+        run: php artisan test
+
+      - name: Electron shell tests
+        run: node --test desktop/test/*.test.cjs

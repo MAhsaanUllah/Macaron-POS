@@ -1,0 +1,25 @@
+/.env
+/.phpunit.cache
+/.phpunit.result.cache
+/node_modules
+/vendor
+/public/build
+/public/hot
+/public/storage
+/database/*.sqlite
+/database/backups
+/database/*.sqlite.bak-*
+/bootstrap/cache/*.php
+/storage/*.key
+desktop/runtime/
+desktop/staging/
+desktop/dev-data/
+dist-desktop/
+
+# Internal working docs — local only. README.md is the only committed .md.
+/AGENTS.md
+/DESIGN.md
+/FINAL_RELEASE_REPORT.md
+/docs/*.md
+/docs/superpowers/
+/release/
